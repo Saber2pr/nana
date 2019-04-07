@@ -1,5 +1,7 @@
 # @saber2pr/nana
 
+[![npm](https://img.shields.io/npm/v/@saber2pr/nana.svg?color=blue)](https://www.npmjs.com/package/@saber2pr/nana)
+
 > a http-server framework.
 
 关于 nana ：
