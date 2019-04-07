@@ -31,15 +31,6 @@ git clone https://github.com/Saber2pr/nana.git
 4. children 子路由
 
 ```ts
-// 路由/hello/user
-const userModule = Module({
-  url: '/user',
-  method: 'GET',
-  callback() {
-    return 'user!'
-  }
-})
-
 // 路由/hello
 const helloModule = Module({
   url: '/hello',
@@ -49,11 +40,20 @@ const helloModule = Module({
   },
   children: [userModule]
 })
+
+// 路由/hello/user
+const userModule = Module({
+  url: '/user',
+  method: 'GET',
+  callback() {
+    return 'user!'
+  }
+})
 ```
 
 ## Nana
 
-boot 函数，参数为 module 数组，返回一个 Server
+主函数，参数为 module 数组，返回一个 Server
 
 ```ts
 Nana([helloModule]).listen(3000, 'localhost', () =>
