@@ -1,26 +1,31 @@
 /*
  * @Author: saber2pr
- * @Date: 2019-04-07 21:37:00
+ * @Date: 2019-04-08 16:36:06
  * @Last Modified by: saber2pr
- * @Last Modified time: 2019-04-07 22:07:05
+ * @Last Modified time: 2019-04-08 17:28:00
  */
-import { Module } from './Module'
+import { createAction, dispatch } from '@saber2pr/event'
 import { RequestListener } from 'http'
-import { processDep } from './process'
+import { Context } from './type/context'
 /**
- * createRequestListener
+ * createServerRequestListener
  *
  * @export
- * @param {Module[]} mods
+ * @param {Context} plugin
  * @returns {RequestListener}
  */
-export function createRequestListener(mods: Module[]): RequestListener {
-  return (request, response) =>
-    mods.forEach(mod => {
-      try {
-        processDep(request, response)(mod)
-      } catch (error) {
-        console.log(error)
-      }
-    })
+export function createServerRequestListener(plugin?: Object): RequestListener {
+  return (request, response) => {
+    try {
+      dispatch<createAction<string, Context>>(request.url, {
+        request,
+        response,
+        ...plugin
+      })
+    } catch (error) {
+      console.log((error as Error).message)
+      response.statusCode = 404
+      response.end('404')
+    }
+  }
 }

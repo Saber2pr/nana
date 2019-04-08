@@ -2,8 +2,9 @@
  * @Author: saber2pr
  * @Date: 2019-04-07 22:04:58
  * @Last Modified by: saber2pr
- * @Last Modified time: 2019-04-07 22:42:21
+ * @Last Modified time: 2019-04-08 16:54:10
  */
+import { Context } from './type/context'
 /**
  * Module
  *
@@ -12,8 +13,7 @@
  */
 export interface Module {
   url: string
-  method: string
-  callback: () => string | Buffer
+  service: (ctx: Context) => void
   children?: Module[]
 }
 /**

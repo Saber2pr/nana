@@ -26,41 +26,80 @@ git clone https://github.com/Saber2pr/nana.git
 
 1. url 路由名称
 
-2. method 方法名
+2. service 响应程序, 参数为 ctx
 
-3. callback 响应程序
-
-4. children 子路由
+3. children 子路由
 
 ```ts
-// 路由/hello
-const helloModule = Module({
-  url: '/hello',
-  method: 'GET',
-  callback() {
-    return 'hello!'
-  },
-  children: [userModule]
+// 路由/user/nana/
+const nana = Module({
+  url: 'nana/',
+  service(ctx) {
+    ctx.response.end('nana!')
+  }
 })
 
-// 路由/hello/user
-const userModule = Module({
-  url: '/user',
-  method: 'GET',
-  callback() {
-    return 'user!'
-  }
+// 路由：/user/
+const user = Module({
+  url: 'user/',
+  service(ctx) {
+    ctx.response.end('user!')
+  },
+  children: [nana]
+})
+
+// 路由：/
+const hello = Module({
+  url: '/',
+  service(ctx) {
+    ctx.response.end('hello!')
+  },
+  children: [user]
 })
 ```
 
 ## Nana
 
-主函数，参数为 module 数组，返回一个 Server
+主命名空间
+
+### Nana.use
+
+在 ctx 对象上添加属性
 
 ```ts
-Nana([helloModule]).listen(3000, 'localhost', () =>
-  console.log('http://localhost:3000')
-)
+// 添加属性nana
+Nana.use({
+  nana: 'Nanasaki!'
+})
+
+const nana = Module({
+  url: 'nana/',
+  service(ctx) {
+    // 读取属性ctx.nana
+    ctx.response.end(ctx.nana)
+  }
+})
+```
+
+### Nana.server
+
+参数为 modules 数组，你只需要将路由根模块放入！
+返回 server 对象
+
+```ts
+Nana.server([hello]).listen(3000) // http://localhost:3000
+```
+
+### Nana.callback
+
+返回 requestListener 实例
+
+当然你可以这样创建一个 Nana 程序
+
+```ts
+import { createServer } from 'http'
+
+createServer(Nana.useModules([hello]).callback()).listen(3000)
 ```
 
 ---

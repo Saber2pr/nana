@@ -1,2 +1,2 @@
-export * from './core/nana'
+export * from './core/Nana'
 export * from './core/Module'

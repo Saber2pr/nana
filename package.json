@@ -1,6 +1,6 @@
 {
   "name": "@saber2pr/nana",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a http-server framework.",
   "repository": {
     "type": "git",
@@ -14,7 +14,8 @@
   ],
   "keywords": [
     "httpserver",
-    "typescript"
+    "typescript",
+    "context"
   ],
   "main": "./lib/index.js",
   "scripts": {
@@ -25,6 +26,7 @@
     "typescript": "^3.2.1"
   },
   "dependencies": {
+    "@saber2pr/event": "0.0.7",
     "@types/node": "^11.13.0"
   }
 }
