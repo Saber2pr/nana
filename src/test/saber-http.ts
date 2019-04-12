@@ -13,7 +13,7 @@ const nana = Module({
 const user = Module({
   url: 'user/',
   service(ctx) {
-    ctx.response.end('user!')
+    ctx.response.end(`user! ${JSON.stringify(ctx.params)}`)
   },
   children: [nana]
 })
