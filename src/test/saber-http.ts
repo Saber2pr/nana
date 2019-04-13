@@ -1,8 +1,14 @@
 import { Nana } from '../core/Nana'
 import { Module } from '../core/Module'
 
+export type MyPlugin = { nana: string }
+
+Nana.use<MyPlugin>({
+  nana: 'nana'
+})
+
 // 路由/user/nana/
-const nana = Module({
+const nana = Module<MyPlugin>({
   url: 'nana/',
   service(ctx) {
     ctx.response.end(ctx.nana)
@@ -12,23 +18,19 @@ const nana = Module({
 // 路由/user/
 const user = Module({
   url: 'user/',
-  service(ctx) {
-    ctx.response.end(`user! ${JSON.stringify(ctx.params)}`)
+  async service(ctx) {
+    ctx.response.end(`user!\n${JSON.stringify(ctx.params, null, 2)}`)
   },
   children: [nana]
 })
 
 // 路由/
-const hello = Module({
+const hello = Module<MyPlugin>({
   url: '/',
-  service(ctx) {
-    ctx.response.end('hello!')
+  async service(ctx) {
+    ctx.response.end('hello')
   },
   children: [user]
 })
 
 Nana.server([hello]).listen(3000, () => console.log('http://localhost:3000'))
-
-Nana.use({
-  nana: 'Nanasaki!'
-})

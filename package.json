@@ -1,6 +1,6 @@
 {
   "name": "@saber2pr/nana",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "a http-server framework.",
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@saber2pr/event": "0.0.9",
+    "@saber2pr/ts-lib": "0.0.3",
     "@types/node": "^11.13.0"
   }
 }

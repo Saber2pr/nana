@@ -4,16 +4,16 @@
  * @Last Modified by: saber2pr
  * @Last Modified time: 2019-04-08 16:54:10
  */
-import { Context } from './type/context'
+import { Context, ContextBase } from './type/context'
 /**
  * Module
  *
  * @export
  * @interface Module
  */
-export interface Module {
+export interface Module<T = Context> {
   url: string
-  service: (ctx: Context) => void
+  service: (ctx: T & ContextBase) => void
   children?: Module[]
 }
 /**
@@ -23,6 +23,6 @@ export interface Module {
  * @param {Module} obj
  * @returns
  */
-export function Module(obj: Module) {
+export function Module<T = Context>(obj: Module<T>) {
   return obj
 }
