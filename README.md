@@ -92,6 +92,14 @@ const nana = Module({
 Nana.server([hello]).listen(3000) // http://localhost:3000
 ```
 
+### Nana.fileServer
+
+启动一个文件服务器
+
+```ts
+Nana.fileServer().listen(3000) // http://localhost:3000
+```
+
 ### Nana.callback
 
 返回 requestListener 实例
