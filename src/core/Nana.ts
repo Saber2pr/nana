@@ -2,7 +2,7 @@
  * @Author: saber2pr
  * @Date: 2019-04-07 22:12:44
  * @Last Modified by: saber2pr
- * @Last Modified time: 2019-04-14 11:46:44
+ * @Last Modified time: 2019-04-14 14:35:50
  */
 import { createServer } from 'http'
 import { Module } from './Module'
@@ -10,7 +10,8 @@ import { nana } from './common/nana'
 import { createServerRequestListener } from './createRequestListener'
 import { __ctx, Plugin } from './type/context'
 import { subscribe } from '@saber2pr/event'
-import { __logconfig, logconfig } from './log/log'
+import { __logconfig, logconfig } from './plugins/log'
+import { FsModule, HTMLIndexModule } from './modules/fsModule'
 
 export namespace Nana {
   /**
@@ -77,7 +78,16 @@ export namespace Nana {
    * @returns
    */
   export function server(mods: Module[]) {
-    useModules(mods)
+    useModules([HTMLIndexModule].concat(mods))
     return createServer(callback())
+  }
+  /**
+   * fileServer
+   *
+   * @export
+   * @returns
+   */
+  export function fileServer() {
+    return server([HTMLIndexModule, FsModule])
   }
 }

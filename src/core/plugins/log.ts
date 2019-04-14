@@ -2,10 +2,10 @@
  * @Author: saber2pr
  * @Date: 2019-04-14 11:32:21
  * @Last Modified by: saber2pr
- * @Last Modified time: 2019-04-14 11:58:39
+ * @Last Modified time: 2019-04-14 14:43:30
  */
 import { RequestListener } from 'http'
-import { Print } from '../utils/print'
+import { Print } from './print'
 
 export type config =
   | 'url'
@@ -18,7 +18,7 @@ export type logconfig = Partial<Record<config, boolean>>
 
 export const log = (c?: logconfig): RequestListener => (request, _) => {
   if (!c) return
-  c.url && Print.tips(`Nana watch-url:[${request.url}]`)
+  c.url && Print.tips(`Nana watch-url:[${decodeURI(request.url)}]`)
   c.method && Print.tips(`Nana watch-method:[${request.method}]`)
   c.statusCode && Print.tips(`Nana watch-statusCode:[${request.statusCode}]`)
   c.statusMessage &&

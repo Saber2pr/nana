@@ -7,7 +7,7 @@ Nana.use<MyPlugin>({
   nana: 'nana'
 })
 
-// 路由/user/nana/
+// 路由 /user/nana/
 const nana = Module<MyPlugin>({
   url: 'nana/',
   service(ctx) {
@@ -15,26 +15,29 @@ const nana = Module<MyPlugin>({
   }
 })
 
-// 路由/user/
+// 路由 /user/
 const user = Module({
-  url: 'user/',
+  url: '/user/',
   async service(ctx) {
     ctx.response.end(`user!\n${JSON.stringify(ctx.params, null, 2)}`)
   },
   children: [nana]
 })
 
-// 路由/
+// 路由 /hello
 const hello = Module<MyPlugin>({
-  url: '/',
+  url: '/hello',
   async service(ctx) {
     ctx.response.end('hello')
-  },
-  children: [user]
+  }
 })
 
-Nana.server([hello]).listen(3000, () => console.log('http://localhost:3000'))
+Nana.server([hello, user]).listen(3000, () =>
+  console.log('http://localhost:3000')
+)
 
 Nana.watch({
   url: true
 })
+
+// Nana.fileServer().listen(3000, () => console.log('http://localhost:3000'))

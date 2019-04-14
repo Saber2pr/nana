@@ -1,3 +1,3 @@
-import { search } from '../core/utils/file'
+import { search } from '../core/plugins/fs'
 
 search(`${process.cwd()}/src`, console.log)

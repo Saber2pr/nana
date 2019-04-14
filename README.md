@@ -26,6 +26,8 @@ git clone https://github.com/Saber2pr/nana.git
 
 1. url 路由名称
 
+> `url可以为*，表示拦截所有请求`
+
 2. service 响应程序, 参数为 ctx
 
 3. children 子路由
