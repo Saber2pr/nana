@@ -2,7 +2,7 @@
  * @Author: saber2pr
  * @Date: 2019-04-07 22:12:44
  * @Last Modified by: saber2pr
- * @Last Modified time: 2019-04-12 13:03:24
+ * @Last Modified time: 2019-04-14 11:46:44
  */
 import { createServer } from 'http'
 import { Module } from './Module'
@@ -10,6 +10,7 @@ import { nana } from './common/nana'
 import { createServerRequestListener } from './createRequestListener'
 import { __ctx, Plugin } from './type/context'
 import { subscribe } from '@saber2pr/event'
+import { __logconfig, logconfig } from './log/log'
 
 export namespace Nana {
   /**
@@ -39,6 +40,17 @@ export namespace Nana {
     return Nana
   }
   /**
+   * watch
+   *
+   * @export
+   * @param {logconfig} config
+   * @returns
+   */
+  export function watch(config: logconfig) {
+    Object.assign(__logconfig, config)
+    return Nana
+  }
+  /**
    * useModules
    *
    * @export
@@ -55,7 +67,7 @@ export namespace Nana {
    * @returns
    */
   export function callback() {
-    return createServerRequestListener(__ctx)
+    return createServerRequestListener(__ctx, __logconfig)
   }
   /**
    * server

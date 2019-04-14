@@ -2,14 +2,15 @@
  * @Author: saber2pr
  * @Date: 2019-04-08 16:36:06
  * @Last Modified by: saber2pr
- * @Last Modified time: 2019-04-13 17:18:38
+ * @Last Modified time: 2019-04-14 13:26:35
  */
 import { createAction, dispatch } from '@saber2pr/event'
 import { RequestListener } from 'http'
 import { Context } from './type/context'
-import { resolveUrl } from './common/resolve'
+import { resolve } from './common/resolve'
 import { fs } from './plugins/fs'
 import * as url from 'url'
+import { log, logconfig } from './log/log'
 /**
  * __plugins
  */
@@ -23,7 +24,10 @@ const __plugins = {
  * @param {Context} plugin
  * @returns {RequestListener}
  */
-export function createServerRequestListener(plugin?: Object): RequestListener {
+export function createServerRequestListener(
+  plugin?: Object,
+  config?: logconfig
+): RequestListener {
   return (request, response) => {
     const context: Context = {
       request,
@@ -33,7 +37,8 @@ export function createServerRequestListener(plugin?: Object): RequestListener {
       ...plugin
     }
     try {
-      dispatch<createAction<string, Context>>(resolveUrl(request.url), context)
+      log(config)(request, response)
+      dispatch<createAction<string, Context>>(resolve(request), context)
     } catch (error) {
       console.log((error as Error).message)
       response.statusCode = 404

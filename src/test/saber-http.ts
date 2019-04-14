@@ -34,3 +34,7 @@ const hello = Module<MyPlugin>({
 })
 
 Nana.server([hello]).listen(3000, () => console.log('http://localhost:3000'))
+
+Nana.watch({
+  url: true
+})
