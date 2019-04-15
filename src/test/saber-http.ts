@@ -38,7 +38,7 @@ import { Module } from '../core/Module'
 
 Nana.watch({
   url: true,
-  headers: true,
+  // headers: true,
   method: true,
   statusCode: true,
   statusMessage: true

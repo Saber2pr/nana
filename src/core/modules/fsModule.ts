@@ -10,22 +10,25 @@ import { Context } from '../type/context'
 export const createFileService = (ctx: Context) => async (url: string) => {
   const path = process.cwd() + decodeURI(url)
   try {
-    if (path.includes('?') || path.includes('#')) {
-      throw new Error(`url${path} is not a file path!`)
-    }
+    if (path.includes('?')) return
     const res = await ctx.fs.read(path)
     ctx.response.end(res)
   } catch (err) {
+    ctx.print.error(err.message)
+    ctx.response.statusCode = 404
     ctx.response.end('404')
   }
 }
 
 export const FsModule = Module({
   url: '*',
-  service: ctx => createFileService(ctx)(ctx.request.url)
+  service: async ctx => {
+    if (ctx.request.url === '/') return
+    await createFileService(ctx)(ctx.request.url)
+  }
 })
 
 export const HTMLIndexModule = Module({
   url: '/',
-  service: ctx => createFileService(ctx)('/index.html')
+  service: async ctx => await createFileService(ctx)('/index.html')
 })
