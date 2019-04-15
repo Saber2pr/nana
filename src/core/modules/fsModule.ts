@@ -9,8 +9,10 @@ import { Context } from '../type/context'
 
 export const createFileService = (ctx: Context) => async (url: string) => {
   const path = process.cwd() + decodeURI(url)
-  ctx.print.success(path)
   try {
+    if (path.includes('?') || path.includes('#')) {
+      throw new Error(`url${path} is not a file path!`)
+    }
     const res = await ctx.fs.read(path)
     ctx.response.end(res)
   } catch (err) {

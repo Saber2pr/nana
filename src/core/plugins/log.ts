@@ -24,7 +24,9 @@ export const log = (c?: logconfig): RequestListener => (request, _) => {
   c.statusMessage &&
     Print.tips(`Nana watch-statusMessage:[${request.statusMessage}]`)
   c.headers &&
-    Print.tips(`Nana watch-headers:[${JSON.stringify(request.headers)}]`)
+    Print.tips(
+      `Nana watch-headers:[${JSON.stringify(request.headers, null, 2)}]`
+    )
 }
 
 export const __logconfig = {}
