@@ -5,7 +5,7 @@
  * @Last Modified time: 2019-04-08 16:13:40
  */
 import { Module } from '../Module'
-import { BFS } from './BFS'
+import { DFS } from './DFS'
 import { Reflector } from './reflector'
 /**
  * nana
@@ -19,7 +19,7 @@ export function nana(
   callback: (currentMod: Module, pathFromRoot: string) => void
 ) {
   modules.forEach(mod =>
-    BFS(mod, (currentNode, parentNode) => {
+    DFS(mod, (currentNode, parentNode) => {
       Reflector.defineUrlMetadata(currentNode, parentNode)
       callback(currentNode, Reflector.getUrlMetadata(currentNode))
     })

@@ -14,7 +14,7 @@ export interface Node {
   children?: this[]
 }
 /**
- * BFS
+ * DFS
  *
  * @export
  * @template T
@@ -22,12 +22,12 @@ export interface Node {
  * @param {(currentNode: T, parent?: T) => void} callback
  * @param {T} [parentNode=null]
  */
-export function BFS<T extends Node>(
+export function DFS<T extends Node>(
   rootNode: T,
   callback: (currentNode: T, parent?: T) => void,
   parentNode: T = null
 ) {
   callback(rootNode, parentNode)
   rootNode.children &&
-    rootNode.children.forEach(node => BFS(node, callback, rootNode))
+    rootNode.children.forEach(node => DFS(node, callback, rootNode))
 }
